@@ -8,8 +8,8 @@
     },
     "files": [
         "README.md",
-        "pulse.ts",
-        "oled.ts"
+        "oled.ts",
+        "pulse.ts"
     ],
     "testFiles": [
         "test.ts"

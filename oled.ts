@@ -1,4 +1,5 @@
-namespace expansionPack {
+//% color="#ff6800" icon="\uf108" weight=15
+namespace OLED {
     let font: number[] = [];
     font[0] = 0x0022d422;
     font[1] = 0x0022d422;

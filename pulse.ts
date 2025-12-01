@@ -1,6 +1,6 @@
-//% color="#ff6800" icon="\uf2db" weight=15
-namespace expansionPack {
-    let sensorPin = AnalogPin.P0
+//% color="#ff6800" icon="\uf21e" weight=15
+namespace pulse {
+    let sensorPin: AnalogPin = undefined
     let prevHeartValue = 0
     let heartDeltaValue = 0
 
@@ -12,18 +12,21 @@ namespace expansionPack {
 
     // Run high-speed heartbeat loop in background
     control.inBackground(function () {
-        while (true) {
+        while (true) { 
+            // Check if sensor pin is attached
+            if (sensorPin == undefined) {
+                return
+            }
+
             // Read sensor
             let sensorValue = pins.analogReadPin(sensorPin)
 
             // Simple delta detection
-            heartDeltaValue = (sensorValue - prevHeartValue) / 2
+            heartDeltaValue = (sensorValue  - prevHeartValue) / 2
             if (heartDeltaValue < 1) {
                 heartDeltaValue = 0
-                pins.digitalWritePin(DigitalPin.P2, 0)
             } else {
                 heartDeltaValue = 1
-                pins.digitalWritePin(DigitalPin.P2, 1)
             }
             prevHeartValue = sensorValue
 
@@ -36,10 +39,20 @@ namespace expansionPack {
                 }
                 lastBeatTime = now
             }
-
             basic.pause(100);
         }
     })
+
+    /**
+    * Attaches the heartbeat sensor to a pin
+    * @param pin the pin the pulse sensor is connected to
+    */
+    //% block="attach Pulse Sensor to %pin"
+    //% pin.shadow="pins.analogPin"
+    //% weight=100
+    export function attachSensor(pin: AnalogPin) {
+        sensorPin = pin
+    }
 
 
     /**

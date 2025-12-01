@@ -1,3 +1,5 @@
+const PULSE_EVENT_ID = 9001
+
 //% color="#ff6800" icon="\uf21e" weight=15
 namespace pulse {
     let sensorPin: AnalogPin = undefined
@@ -27,6 +29,7 @@ namespace pulse {
                 heartDeltaValue = 0
             } else {
                 heartDeltaValue = 1
+                control.raiseEvent(PULSE_EVENT_ID, 1)
             }
             prevHeartValue = sensorValue
 
@@ -63,5 +66,15 @@ namespace pulse {
     //% weight=100
     export function getBPM(): number {
         return bpm
+    }
+
+    /**
+    * Do something whenever a pulse is detected
+    */
+    //% block="on pulse detected"
+    //% draggableParameters="reporter"
+    //% weight=85
+    export function onPulseDetected(handler: () => void) {
+        control.onEvent(PULSE_EVENT_ID, 1, handler)
     }
 }

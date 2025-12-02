@@ -137,6 +137,8 @@ namespace OLED {
     let _buf4 = pins.createBuffer(4);
     let _ZOOM = 1;
 
+    init(60);
+
     function cmd1(d: number) {
         let n = d % 256;
         pins.i2cWriteNumber(_I2CAddr, n, NumberFormat.UInt16BE);

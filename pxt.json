@@ -10,7 +10,8 @@
         "README.md",
         "oled.ts",
         "pulse.ts",
-        "smbus.ts"
+        "smbus.ts",
+        "colour.ts"
     ],
     "testFiles": [
         "test.ts"

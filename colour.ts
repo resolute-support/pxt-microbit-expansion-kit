@@ -1,5 +1,5 @@
-//% color="#ff6800" icon="\uf108" weight=15
-namespace ColourSensor {
+//% color="#ff6800" icon="\uf1fb" weight=15
+namespace Colour {
     class tcs3472 {
         is_setup: boolean
         addr: number
@@ -50,7 +50,6 @@ namespace ColourSensor {
      */
     //% blockId=brickcell_color_tcs34725_get_light
     //% block="Get light"
-    //% subcategory="color tcs34725"
     export function getLight(): number {
         return Math.round(_tcs3472.light())
     }
@@ -60,7 +59,6 @@ namespace ColourSensor {
      */
     //% blockId=brickcell_color_tcs34725__get_red
     //% block="Get red"
-    //% subcategory="color tcs34725"
     export function getRed(): number {
         return Math.round(_tcs3472.rgb()[0])
     }
@@ -70,7 +68,6 @@ namespace ColourSensor {
      */
     //% blockId=brickcell_color_tcs34725_get_green
     //% block="Get green"
-    //% subcategory="color tcs34725"
     export function getGreen(): number {
         return Math.round(_tcs3472.rgb()[1])
     }
@@ -80,7 +77,6 @@ namespace ColourSensor {
      */
     //% blockId=brickcell_color_tcs34725_get_blue
     //% block="Get blue"
-    //% subcategory="color tcs34725"
     export function getBlue(): number {
         return Math.round(_tcs3472.rgb()[2])
     }
@@ -91,7 +87,6 @@ namespace ColourSensor {
     //% blockId=brickcell_color_tcs34725_set_integration_time
     //% block="Set colour integration time %time ms"
     //% time.min=0 time.max=612 value.defl=500
-    //% subcategory="color tcs34725"
     export function setColourIntegrationTime(time: number): void {
         return _tcs3472.setIntegrationTime(time)
     }

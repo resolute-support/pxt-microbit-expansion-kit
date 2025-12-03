@@ -12,7 +12,8 @@
         "pulse.ts",
         "smbus.ts",
         "colour.ts",
-        "gyro.ts"
+        "gyro.ts",
+        "dht.ts"
     ],
     "testFiles": [
         "test.ts"

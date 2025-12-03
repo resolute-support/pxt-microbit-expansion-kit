@@ -13,7 +13,8 @@
         "smbus.ts",
         "colour.ts",
         "gyro.ts",
-        "dht.ts"
+        "dht.ts",
+        "fan.ts"
     ],
     "testFiles": [
         "test.ts"

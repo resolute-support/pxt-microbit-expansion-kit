@@ -5,7 +5,7 @@ enum tempType {
     fahrenheit
 }
 
-//% block="DHT11" weight=100 color=#ff8f3f icon="\uf043"
+//% block="DHT11" weight=100 color=#ff6800 icon="\uf043"
 namespace dht11 {
 
     let _temptype: tempType = tempType.celsius

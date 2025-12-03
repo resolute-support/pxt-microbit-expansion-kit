@@ -11,7 +11,8 @@
         "oled.ts",
         "pulse.ts",
         "smbus.ts",
-        "colour.ts"
+        "colour.ts",
+        "gyro.ts"
     ],
     "testFiles": [
         "test.ts"

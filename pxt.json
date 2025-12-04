@@ -14,7 +14,8 @@
         "colour.ts",
         "gyro.ts",
         "dht.ts",
-        "fan.ts"
+        "fan.ts",
+        "servo.ts"
     ],
     "testFiles": [
         "test.ts"

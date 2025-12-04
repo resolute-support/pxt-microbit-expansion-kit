@@ -15,7 +15,8 @@
         "gyro.ts",
         "dht.ts",
         "fan.ts",
-        "servo.ts"
+        "servo.ts",
+        "encoder.ts"
     ],
     "testFiles": [
         "test.ts"

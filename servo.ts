@@ -1,4 +1,4 @@
-//% color="#ff6800" icon="\uf021" weight=15
+//% color="#ff6800" icon="\uf085" weight=15
 namespace servo360 {
 
     enum Direction {

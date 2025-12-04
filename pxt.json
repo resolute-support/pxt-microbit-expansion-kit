@@ -17,7 +17,8 @@
         "fan.ts",
         "servo.ts",
         "encoder.ts",
-        "lm35.ts"
+        "lm35.ts",
+        "knock.ts"
     ],
     "testFiles": [
         "test.ts"

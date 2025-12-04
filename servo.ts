@@ -19,4 +19,10 @@ namespace servo360 {
         pins.servoSetPulse(pin, pulse)
     }
 
+    //% block="stop servo on pin %pin"
+    //% pin.shadow="pins.analogPin"
+    export function stopServo(pin: AnalogPin): void {
+        pins.servoSetPulse(pin, 1500)
+    }
+
 }

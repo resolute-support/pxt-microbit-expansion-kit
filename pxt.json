@@ -16,7 +16,8 @@
         "dht.ts",
         "fan.ts",
         "servo.ts",
-        "encoder.ts"
+        "encoder.ts",
+        "lm35.ts"
     ],
     "testFiles": [
         "test.ts"

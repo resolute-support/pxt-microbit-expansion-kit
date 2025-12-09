@@ -10,6 +10,7 @@ namespace servo360 {
 
     //% block="servo pin %pin rotate %Direction at $power \\%"
     //% pin.shadow="pins.analogPin"
+    //% power.shadow="number"
     //% power.min=0 power.max=100
     //% power.defl=50
     export function servoWritePin(pin: AnalogPin, direction: Direction, power: number): void {

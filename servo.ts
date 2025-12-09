@@ -3,9 +3,9 @@ namespace servo360 {
 
     export enum ServoDirection {
         //% block="clockwise"
-        Clockwise = 0,
+        Clockwise = 1,
         //% block="anti-clockwise"
-        AntiClockwise = 1
+        AntiClockwise = 0
     }
 
     /**

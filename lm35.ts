@@ -7,7 +7,7 @@ namespace lm35 {
      * Attach LM35 temperature sensor to a pin
      */
     //% block="attach LM35 sensor to pin %pin"
-    //% pin.shadow="pins.analogPin"
+    //% pin.shadow="pin0"
     export function attachSensor(pin: AnalogPin): void {
         sensorPin = pin
     }

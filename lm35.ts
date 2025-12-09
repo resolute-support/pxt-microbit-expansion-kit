@@ -1,4 +1,4 @@
-//% color="#ff6800" icon="\uf2c9" weight=15
+//% color="#ff6800" icon="\uf2c9" weight=15 block="Temp Sensor"
 namespace lm35 {
 
     let sensorPin: AnalogPin = undefined

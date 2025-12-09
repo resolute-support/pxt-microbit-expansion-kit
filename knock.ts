@@ -1,4 +1,4 @@
-//% color="#ff6800" icon="\uf25a" weight=15
+//% color="#ff6800" icon="\uf25a" weight=15 block="Knock Sensor"
 namespace knockSensor {
 
     let sensorPin: DigitalPin = undefined

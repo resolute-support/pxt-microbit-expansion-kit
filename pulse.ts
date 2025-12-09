@@ -2,12 +2,19 @@ const PULSE_EVENT_ID = 9001
 
 //% color="#ff6800" icon="\uf21e" weight=15
 namespace pulse {
-    let sensorPin: AnalogPin = undefined
-    let prevHeartValue = 0
-    let heartDeltaValue = 0
+    let startTime:any = null;
+    let lastTime:any = null;
+    let currentTime:any = null;
+    let elapsedTime:any = null;
 
-    let lastBeatTime = 0
+    let heartDeltaValue = 0;
+    let prevHeartValue = 0;
+    let pulseCount = 0
+
+    let bpmFiltered = 0;
     let bpm = 0
+
+    let sensorPin: AnalogPin = undefined
 
     // Minimum interval between beats to prevent double counting (ms)
     const minBeatInterval = 300
@@ -19,6 +26,7 @@ namespace pulse {
             if (sensorPin == undefined) {
                 return
             }
+            updateTime()
 
             // Read sensor
             let sensorValue = pins.analogReadPin(sensorPin)
@@ -29,22 +37,33 @@ namespace pulse {
                 heartDeltaValue = 0
             } else {
                 heartDeltaValue = 1
+                calculateRunningBpm()
                 control.raiseEvent(PULSE_EVENT_ID, 1)
             }
             prevHeartValue = sensorValue
 
-            // ----- BPM Logic -----
-            if (heartDeltaValue == 1) {
-                let now = input.runningTime()  // current time in ms
-                if (lastBeatTime > 0 && (now - lastBeatTime) > minBeatInterval) {
-                    let interval = now - lastBeatTime  // time between beats
-                    bpm = Math.round(60000 / interval) // convert to BPM
-                }
-                lastBeatTime = now
+            if (elapsedTime >= 5) {
+                let tempBpm = pulseCount * 12
+                bpmFiltered = (bpmFiltered*0.7 +tempBpm*0.3)
+                bpm = Math.round(bpmFiltered)
+                startTime = currentTime
+                pulseCount = 0
             }
-            basic.pause(100);
+            basic.pause(10);
         }
     })
+
+    function calculateRunningBpm() {
+        if ((control.millis() - lastTime) > 250) {
+            pulseCount += 1
+            lastTime = control.millis()
+        }
+    }
+
+    function updateTime() {
+        currentTime = control.millis()
+        elapsedTime = (currentTime - startTime)/1000
+    }
 
     /**
     * Attaches the heartbeat sensor to a pin
@@ -54,6 +73,8 @@ namespace pulse {
     //% pin.shadow="pins.analogPin"
     //% weight=100
     export function attachSensor(pin: AnalogPin) {
+        let startTime = control.millis();
+        let lastTime = 0;
         sensorPin = pin
     }
 

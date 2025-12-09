@@ -154,13 +154,13 @@ namespace SENMPU6050 {
     export function gyroscope(axis: axisXYZ, sensitivity: gyroSen) {
         updateGyroscope(sensitivity);
         if (axis == axisXYZ.x) {
-            return xGyro;
+            return format2Decimals(xGyro);
         }
         else if (axis == axisXYZ.y) {
-            return yGyro;
+            return format2Decimals(yGyro);
         }
         else {
-            return zGyro;
+            return format2Decimals(zGyro);
         }
     }
 
@@ -186,7 +186,7 @@ namespace SENMPU6050 {
         // Convert radian to degrees and return
         let pi = Math.PI;
         let degrees = radians * (180 / pi);
-        return degrees;
+        return format2Decimals(degrees);
     }
 
     /**
@@ -198,13 +198,13 @@ namespace SENMPU6050 {
         updateAcceleration(sensitivity);
         // Return acceleration of specific axis
         if (axis == axisXYZ.x) {
-            return xAccel;
+            return format2Decimals(xAccel);
         }
         else if (axis == axisXYZ.y) {
-            return yAccel;
+            return format2Decimals(yAccel);
         }
         else {
-            return zAccel;
+            return format2Decimals(zAccel);
         }
     }
 
@@ -218,4 +218,10 @@ namespace SENMPU6050 {
         let rawTemp = readData(tempAddr);
         return 36.53 + rawTemp / 340;
     }
+    
+
+    function format2Decimals(n: number): number {
+        return Math.round(n * 100) / 100
+    }
+
 }

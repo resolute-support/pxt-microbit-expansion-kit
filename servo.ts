@@ -8,7 +8,7 @@ namespace servo360 {
         AntiClockwise = 1
     }
 
-    //% block="servo pin %pin rotate %direction at %power"
+    //% block="servo pin %pin rotate %Direction at %power"
     //% pin.shadow="pins.analogPin"
     //% power.min=0 power.max=100
     export function servoWritePin(pin: AnalogPin, direction: Direction, power: number): void {

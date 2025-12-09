@@ -9,30 +9,18 @@ namespace servo360 {
     }
 
     /**
-     * Rotate a 360° servo
-     */
-    //% block="servo pin %pin rotate %direction at %power \\%" 
-    //% pin.shadow="pins.analogPin"
-    //% power.shadow="math_number" power.defl=50 power.min=0 power.max=100
-    export function servoWritePin(pin: AnalogPin, direction: ServoDirection, power: number): void {
+    * Rotate a 360° servo
+    */
+    //% block="servo pin $pin rotate $direction at $speed \\% power"
+    //% speed.min=0 speed.max=100
+    export function servoWritePin(pin:AnalogPin, direction: ServoDirection, speed: number) {
         let pulse = 1500
         if (direction === ServoDirection.Clockwise) {
-            pulse = 1500 + Math.map(power, 0, 100, 0, 500)
+            pulse = 1500 + Math.map(speed, 0, 100, 0, 500)
         } else {
-            pulse = 1500 - Math.map(power, 0, 100, 0, 500)
+            pulse = 1500 - Math.map(speed, 0, 100, 0, 500)
         }
         pins.servoSetPulse(pin, pulse)
-    }
-
-    /**
-     * move the car left, right, forward or backwards
-     * @param direction type of movement to make
-     * @param speed how fast to make movement
-     */
-    //% block="servo pin $pin rotate $direction $speed \\% speed"
-    //% speed.min=0 speed.max=100
-    export function run(direction: ServoDirection, speed: number) {
-        // logic here
     }
 
     /**

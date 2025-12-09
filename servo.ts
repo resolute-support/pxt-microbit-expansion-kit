@@ -8,9 +8,12 @@ namespace servo360 {
         AntiClockwise = 1
     }
 
+    /**
+     * Rotate a 360° servo
+     */
     //% block="servo pin %pin rotate %direction at %power \\%" 
     //% pin.shadow="pins.analogPin"
-    //% power.shadow="number" power.defl=50 power.min=0 power.max=100
+    //% power.shadow="math_number" power.defl=50 power.min=0 power.max=100
     export function servoWritePin(pin: AnalogPin, direction: Direction, power: number): void {
         let pulse = 1500
         if (direction === Direction.Clockwise) {
@@ -21,6 +24,9 @@ namespace servo360 {
         pins.servoSetPulse(pin, pulse)
     }
 
+    /**
+     * Stop a 360° servo
+     */
     //% block="stop servo on pin %pin"
     //% pin.shadow="pins.analogPin"
     export function stopServo(pin: AnalogPin): void {

@@ -1,8 +1,10 @@
 //% color="#ff6800" icon="\uf085" weight=15
 namespace servo360 {
 
-    enum Direction {
+    export enum Direction {
+        //% block="clockwise"
         Clockwise = 0,
+        //% block="anti-clockwise"
         AntiClockwise = 1
     }
 

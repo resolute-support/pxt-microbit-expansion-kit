@@ -8,7 +8,7 @@ namespace servo360 {
         AntiClockwise = 1
     }
 
-    //% block="servo pin %pin rotate %Direction at $power \\%"
+    //% block="servo pin %pin rotate %direction at %power \\%"
     //% pin.shadow="pins.analogPin"
     //% power.shadow="number"
     //% power.min=0 power.max=100

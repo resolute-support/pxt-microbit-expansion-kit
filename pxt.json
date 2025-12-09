@@ -13,7 +13,6 @@
         "smbus.ts",
         "colour.ts",
         "gyro.ts",
-        "dht.ts",
         "fan.ts",
         "servo.ts",
         "encoder.ts",

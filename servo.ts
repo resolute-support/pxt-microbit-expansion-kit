@@ -16,9 +16,9 @@ namespace servo360 {
     export function servoWritePin(pin:AnalogPin, direction: ServoDirection, speed: number) {
         let pulse = 1500
         if (direction === ServoDirection.Clockwise) {
-            pulse = 1500 + Math.map(speed, 0, 100, 0, 500)
-        } else {
             pulse = 1500 - Math.map(speed, 0, 100, 0, 500)
+        } else {
+            pulse = 1500 + Math.map(speed, 0, 100, 0, 500)
         }
         pins.servoSetPulse(pin, pulse)
     }

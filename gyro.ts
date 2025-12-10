@@ -146,6 +146,15 @@ namespace SENMPU6050 {
         pins.i2cWriteBuffer(i2cAddress, buffer);
     }
 
+
+    /*
+    *
+    *
+    */
+    export function testingVar() {
+        return
+    }
+
     /**
       * Get gyroscope values
       */

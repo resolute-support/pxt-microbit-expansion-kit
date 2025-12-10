@@ -28,17 +28,13 @@ namespace Encoder {
             while (true) {
                 const riValue = pins.digitalReadPin(ri);
                 const dvValue = pins.digitalReadPin(dv);
-                serial.writeValue("ri", riValue);
-                serial.writeValue("dv", dvValue);
                 if (riValue == 1 && dvValue == 1) rotateReady = true;
                 else if (rotateReady) {
                     if (riValue == 1 && dvValue == 0) {
-                        serial.writeLine("Right!");
                         rotateReady = false;
                         control.raiseEvent(rotatedRightID, RotationDirection.Right);
                     }
                     else if (riValue == 0 && dvValue == 1) {
-                        serial.writeLine("Left!")
                         rotateReady = false;
                         control.raiseEvent(rotatedLeftID, RotationDirection.Left);
                     }

@@ -44,6 +44,7 @@ namespace Colour {
     }
 
     let _tcs3472: tcs3472 = new tcs3472(0x29)
+    _tcs3472.setIntegrationTime(2.4)
 
     /**
      * Get the light level
@@ -79,15 +80,5 @@ namespace Colour {
     //% block="Get blue"
     export function getBlue(): number {
         return Math.round(_tcs3472.rgb()[2])
-    }
-
-    /**
-     * Set the integration time of the colour sensor in ms
-     */
-    //% blockId=brickcell_color_tcs34725_set_integration_time
-    //% block="Set colour integration time %time ms"
-    //% time.min=0 time.max=612 value.defl=500
-    export function setColourIntegrationTime(time: number): void {
-        return _tcs3472.setIntegrationTime(time)
     }
 }

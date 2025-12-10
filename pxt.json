@@ -17,7 +17,8 @@
         "servo.ts",
         "encoder.ts",
         "lm35.ts",
-        "knock.ts"
+        "knock.ts",
+        "voltage.ts"
     ],
     "testFiles": [
         "test.ts"

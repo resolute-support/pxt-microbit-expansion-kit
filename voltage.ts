@@ -16,7 +16,7 @@ namespace VoltageSensor {
     /**
      * Read voltage from sensor
      */
-    //% block="read Voltage temperature"
+    //% block="read Voltage"
     export function readVoltage(): number {
         if (sensorPin === undefined) return 0
         let reading = pins.analogReadPin(AnalogPin.P0)

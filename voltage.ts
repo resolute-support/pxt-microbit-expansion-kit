@@ -21,6 +21,10 @@ namespace VoltageSensor {
         if (sensorPin === undefined) return 0
         let reading = pins.analogReadPin(AnalogPin.P0)
         let voltage = reading * (16.5/1023)
-        return voltage
+        return format2Decimals(voltage)
+    }
+
+    function format2Decimals(n: number): number {
+        return Math.round(n * 100) / 100
     }
 }

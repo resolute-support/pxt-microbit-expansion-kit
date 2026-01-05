@@ -18,7 +18,8 @@
         "encoder.ts",
         "lm35.ts",
         "knock.ts",
-        "voltage.ts"
+        "voltage.ts",
+        "buzzer.ts"
     ],
     "testFiles": [
         "test.ts"

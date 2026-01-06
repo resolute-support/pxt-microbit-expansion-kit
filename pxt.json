@@ -15,7 +15,6 @@
         "gyro.ts",
         "fan.ts",
         "servo.ts",
-        "encoder.ts",
         "lm35.ts",
         "knock.ts",
         "voltage.ts",

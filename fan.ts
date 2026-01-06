@@ -26,7 +26,7 @@ namespace fanMotor {
     export function setFan(direction: FanDirection, power: number) {
         if (pinA === undefined || pinB === undefined) return
 
-        let pwmValue = Math.max(0, Math.min(255, 255 - Math.round(power * 255 / 100)))
+        let pwmValue = Math.max(0, Math.min(255, Math.round(power * 255 / 100)))
 
         if (direction == 0) {
             // Clockwise

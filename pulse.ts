@@ -1,68 +1,133 @@
-const PULSE_EVENT_ID = 9001
+let PULSE_EVENT_ID = 9001
 
 //% color="#ff6800" icon="\uf21e" weight=15
 namespace pulse {
-    let startTime:any = null;
-    let lastTime:any = null;
-    let currentTime:any = null;
-    let elapsedTime:any = null;
 
-    let heartDeltaValue = 0;
-    let prevHeartValue = 0;
-    let pulseCount = 0
+    let lastBeatTime = 0
+    let firstBeat = true
+    let beatLockout = false
 
-    let bpmFiltered = 0;
+    let lastBeatDetectedTime = 0
+
     let bpm = 0
+    let bpmFiltered = 0
+
+    let ibi = 0
+    let ibiHistory: number[] = []
+    const IBI_HISTORY_SIZE = 10
 
     let sensorPin: AnalogPin = undefined
+    let prevValue = 0
 
-    // Minimum interval between beats to prevent double counting (ms)
-    const minBeatInterval = 300
+    let baseline = 0
+    let peak = 0
+    let threshold = 0
 
-    // Run high-speed heartbeat loop in background
+    const minBeatInterval = 700
+    const maxBeatInterval = 1500
+
     control.inBackground(function () {
-        while (true) { 
-            // Check if sensor pin is attached
+
+        while (true) {
+
             if (sensorPin == undefined) {
-                return
+                basic.pause(50)
+                continue
             }
-            updateTime()
 
-            // Read sensor
-            let sensorValue = pins.analogReadPin(sensorPin)
+            let value = pins.analogReadPin(sensorPin)
+            let now = control.millis()
 
-            // Simple delta detection
-            heartDeltaValue = (sensorValue  - prevHeartValue) / 2
-            if (heartDeltaValue < 1) {
-                heartDeltaValue = 0
-            } else {
-                heartDeltaValue = 1
-                calculateRunningBpm()
-                control.raiseEvent(PULSE_EVENT_ID, 1)
+            // Detect finger re-inserted and re-initialise detector
+            if (bpm == 0 && Math.abs(value - baseline) > 40) {
+                hardReset(value)
             }
-            prevHeartValue = sensorValue
 
-            if (elapsedTime >= 5) {
-                let tempBpm = pulseCount * 12
-                bpmFiltered = (bpmFiltered*0.7 +tempBpm*0.3)
-                bpm = Math.round(bpmFiltered)
-                startTime = currentTime
-                pulseCount = 0
+            baseline = baseline * 0.95 + value * 0.05
+
+            let signal = value - baseline
+            peak = Math.max(peak * 0.98, signal)
+
+            threshold = baseline + peak * 0.3   // 🔧 lowered
+
+            // Peak detection
+            if (
+                !beatLockout &&
+                Math.abs(prevValue - baseline) > peak * 0.75 &&
+                Math.abs(prevValue) > Math.abs(value)
+            ) {
+
+                let delta = now - lastBeatTime
+
+                if (delta > minBeatInterval && delta < maxBeatInterval) {
+
+                    beatLockout = true
+
+                    if (firstBeat) {
+                        firstBeat = false
+                        lastBeatTime = now
+                    } else {
+                        ibi = delta
+                        lastBeatTime = now
+
+                        ibiHistory.push(ibi)
+                        if (ibiHistory.length > IBI_HISTORY_SIZE) {
+                            ibiHistory.shift()
+                        }
+
+                        let sorted = ibiHistory.slice()
+                        sorted.sort(function (a, b) { return a - b })
+                        let mid = Math.idiv(sorted.length, 2)
+                        let medianIbi = sorted[mid]
+
+                        let instantBpm = 60000 / medianIbi
+
+                        instantBpm *= 0.82
+
+                        bpmFiltered = bpmFiltered == 0
+                            ? instantBpm
+                            : bpmFiltered * 0.6 + instantBpm * 0.4
+
+                        bpm = Math.round(bpmFiltered)
+                        lastBeatDetectedTime = now
+                        control.raiseEvent(PULSE_EVENT_ID, 1)
+                    }
+                }
             }
-            basic.pause(10);
+
+            if (value < baseline + peak * 0.1) {
+                beatLockout = false
+            }
+
+            prevValue = value
+            updateTimeout()
+            basic.pause(10)
         }
     })
 
-    function calculateRunningBpm() {
-        if ((control.millis() - lastTime) > 250) {
-            pulseCount += 1
-            lastTime = control.millis()
-        }
+    function hardReset(value: number) {
+        baseline = value
+        peak = 0
+        threshold = value
+        prevValue = value
+
+        bpm = 0
+        bpmFiltered = 0
+        ibi = 0
+        ibiHistory = []
+
+        firstBeat = true
+        beatLockout = false
+        lastBeatTime = control.millis()
+        lastBeatDetectedTime = control.millis()
+
+        serial.writeLine("hard resetting")
     }
 
-    function updateTime() {
-        currentTime = control.millis()
-        elapsedTime = (currentTime - startTime)/1000
+    function updateTimeout() {
+        if (control.millis() - lastBeatDetectedTime > 3000) {
+            bpm = 0
+        }
     }
 
     /**
@@ -73,11 +138,21 @@ namespace pulse {
     //% pin.shadow="pins.analogPin"
     //% weight=100
     export function attachSensor(pin: AnalogPin) {
-        let startTime = control.millis();
-        let lastTime = 0;
         sensorPin = pin
-    }
 
+        let v = pins.analogReadPin(pin)
+        prevValue = v
+        baseline = v
+        peak = 0
+
+        lastBeatTime = control.millis()
+        bpm = 0
+        bpmFiltered = 0
+        ibi = 0
+        ibiHistory = []
+        firstBeat = true
+        beatLockout = false
+    }
 
     /**
      * Returns the current BPM measured by the heartbeat sensor.
@@ -87,15 +162,5 @@ namespace pulse {
     //% weight=100
     export function getBPM(): number {
         return bpm
-    }
-
-    /**
-    * Do something whenever a pulse is detected
-    */
-    //% block="on pulse detected"
-    //% draggableParameters="reporter"
-    //% weight=85
-    export function onPulseDetected(handler: () => void) {
-        control.onEvent(PULSE_EVENT_ID, 1, handler)
     }
 }

@@ -38,7 +38,7 @@ enum gyroSen {
     range_2000_dps
 }
 
-//% color="#ff6800" icon="\uf21d" weight=15 block="Gyroscope"
+//% color="#ff6800" icon="\uf21d" weight=15 block="Accel/Gyro"
 namespace SENMPU6050 {
     let i2cAddress = 0x68;
     let power_mgmt = 0x6b;

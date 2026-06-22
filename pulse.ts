@@ -76,7 +76,7 @@ namespace pulse {
                         }
 
                         let sorted = ibiHistory.slice()
-                        sorted.sort(function (a, b) { return a - b })
+                        sorted.sort()
                         let mid = Math.idiv(sorted.length, 2)
                         let medianIbi = sorted[mid]
 

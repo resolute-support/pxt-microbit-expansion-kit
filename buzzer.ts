@@ -6,10 +6,10 @@ namespace Sound {
      * Redirects audio from Pin 0 to the selected pin.
      */
     //% block="attach buzzer to pin %pin"
-    //% pin.shadow="pins.DigitalPin"
+    //% pin.shadow="pins.AnalogPin"
     //% group="micro:bit (V1 / V1.5)"
     //% weight=100
-    export function setAudioPinV1(pin: DigitalPin): void {
+    export function setAudioPinV1(pin: AnalogPin): void {
         pins.setAudioPin(pin);
     }
 
@@ -17,11 +17,11 @@ namespace Sound {
      * Attach an external buzzer and disable the built-in speaker (micro:bit v2).
      */
     //% block="attach buzzer to pin %pin"
-    //% pin.shadow="pins.DigitalPin"
+    //% pin.shadow="pins.AnalogPin"
     //% group="micro:bit (V2)"
     //% weight=90
     //% v2_only=true
-    export function setAudioPinV2(pin: DigitalPin): void {
+    export function setAudioPinV2(pin: AnalogPin): void {
         music.setBuiltInSpeakerEnabled(false);
         pins.setAudioPin(pin);
     }
